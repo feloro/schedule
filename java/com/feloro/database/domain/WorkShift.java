@@ -1,5 +1,7 @@
 package com.feloro.database.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,6 +13,7 @@ import java.util.UUID;
 public class WorkShift {
 
     @Id
+    @Type(type = "uuid-char")
     @Column(name = "workshiftid")
     private UUID workShiftId;
 

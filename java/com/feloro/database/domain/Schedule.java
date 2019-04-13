@@ -1,5 +1,7 @@
 package com.feloro.database.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -8,6 +10,7 @@ import java.util.UUID;
 public class Schedule {
 
     @Id
+    @Type(type = "uuid-char")
     @Column(name = "ScheduleID")
     private UUID scheduleId;
 

@@ -1,5 +1,7 @@
 package com.feloro.database.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
@@ -9,8 +11,9 @@ import java.util.UUID;
 public class ScheduleWorkShift {
 
     @Id
+    @Type(type = "uuid-char")
     @Column
-    private UUID ScheduleWorkShiftId;
+    private UUID scheduleWorkShiftId;
 
     @ManyToOne
     @JoinColumn(name = "scheduleId", referencedColumnName = "scheduleId")
@@ -24,11 +27,11 @@ public class ScheduleWorkShift {
     private Date date;
 
     public UUID getScheduleWorkShiftId() {
-        return ScheduleWorkShiftId;
+        return scheduleWorkShiftId;
     }
 
     public void setScheduleWorkShiftId(UUID scheduleWorkShiftId) {
-        ScheduleWorkShiftId = scheduleWorkShiftId;
+        this.scheduleWorkShiftId = scheduleWorkShiftId;
     }
 
     public Schedule getSchedule() {

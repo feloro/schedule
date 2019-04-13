@@ -1,5 +1,7 @@
 package com.feloro.database.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
@@ -9,6 +11,7 @@ import java.util.UUID;
 public class Attendance {
 
     @Id
+    @Type(type = "uuid-char")
     @Column
     private UUID attendanceId;
 
