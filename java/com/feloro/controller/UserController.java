@@ -24,6 +24,12 @@ public class UserController {
         return userService.findAllUsers();
     }
 
+    @GetMapping("/user/my")
+    public User getCurrentUsr() {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userService.findUserByName(username);
+    }
+
     @PostMapping("/user")
     public User createUser(String username, String password, Integer role) {
         return userService.createUser(username, role, password);
