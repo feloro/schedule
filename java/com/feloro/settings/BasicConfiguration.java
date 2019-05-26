@@ -43,7 +43,7 @@ public class BasicConfiguration extends WebSecurityConfigurerAdapter {
                 //.and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 //.and().formLogin().loginPage("/login").permitAll()
                 .and().logout().permitAll()
-                .and().httpBasic();
+                .and().httpBasic().and().csrf().disable();
 
 
 

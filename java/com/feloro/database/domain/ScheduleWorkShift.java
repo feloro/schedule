@@ -1,5 +1,6 @@
 package com.feloro.database.domain;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -7,12 +8,16 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name = "ScheduleWorkShift")
+@Table(name = "[ScheduleWorkShift]")
 public class ScheduleWorkShift {
 
     @Id
     @Type(type = "uuid-char")
-    @Column
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
     private UUID scheduleWorkShiftId;
 
     @ManyToOne

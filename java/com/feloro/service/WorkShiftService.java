@@ -22,6 +22,10 @@ public class WorkShiftService {
         return workShiftRepository.save(workShift);
     }
 
+    public WorkShift getWorkShift(UUID workShiftId) {
+        return workShiftRepository.findById(workShiftId).orElse(null);
+    }
+
     public void deleteWorkShift(UUID workShiftId) {
         workShiftRepository.deleteById(workShiftId);
     }

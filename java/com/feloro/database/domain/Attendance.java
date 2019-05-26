@@ -20,10 +20,8 @@ public class Attendance {
     private User user;
 
     @Column
-    private Date from;
-
-    @Column
-    private Date until;
+    @Temporal(TemporalType.TIME)
+    private Date time;
 
     public UUID getAttendanceId() {
         return attendanceId;
@@ -41,19 +39,11 @@ public class Attendance {
         this.user = user;
     }
 
-    public Date getFrom() {
-        return from;
+    public Date getTime() {
+        return time;
     }
 
-    public void setFrom(Date from) {
-        this.from = from;
-    }
-
-    public Date getUntil() {
-        return until;
-    }
-
-    public void setUntil(Date until) {
-        this.until = until;
+    public void setTime(Date time) {
+        this.time = time;
     }
 }
