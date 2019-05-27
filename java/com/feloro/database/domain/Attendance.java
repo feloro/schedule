@@ -1,5 +1,6 @@
 package com.feloro.database.domain;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -12,7 +13,11 @@ public class Attendance {
 
     @Id
     @Type(type = "uuid-char")
-    @Column
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
     private UUID attendanceId;
 
     @ManyToOne
@@ -22,6 +27,10 @@ public class Attendance {
     @Column
     @Temporal(TemporalType.TIME)
     private Date time;
+
+    @Column
+    @Temporal(TemporalType.DATE)
+    private Date date;
 
     public UUID getAttendanceId() {
         return attendanceId;
@@ -45,5 +54,13 @@ public class Attendance {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
