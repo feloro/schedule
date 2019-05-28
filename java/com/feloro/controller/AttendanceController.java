@@ -1,13 +1,11 @@
 package com.feloro.controller;
 
+import com.feloro.controller.wrapper.CheckInWrapper;
 import com.feloro.database.domain.Attendance;
 import com.feloro.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.UUID;
@@ -18,10 +16,10 @@ public class AttendanceController {
     @Autowired
     AttendanceService attendanceService;
 
-    @GetMapping("/attendance/checkin")
-    public Attendance checkIn(@PathVariable("userId") UUID userId, @PathVariable("datetime") Date datetime) {
+    @PostMapping("/attendance/checkin")
+    public Attendance checkIn(@RequestBody CheckInWrapper wrapper) {
         //String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //attendanceService.checkIn();
-        return attendanceService.checkIn(userId, datetime);
+        return attendanceService.checkIn(wrapper.getUserId(), wrapper.getDate(), wrapper.getTime());
     }
 }

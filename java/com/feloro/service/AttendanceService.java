@@ -20,21 +20,15 @@ public class AttendanceService {
     @Autowired
     UserService userService;
 
-    public Attendance checkIn(UUID userId, Date time) {
+    public Attendance checkIn(UUID userId, Date date, Date time) {
         User user = userService.getUser(userId);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(time);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        List<Attendance> data = attendanceRepository.findAllByUserAndDate(user, cal.getTime());
+        List<Attendance> data = attendanceRepository.findAllByUserAndDate(user, date);
         if (data.size()==0 || data.size()==1) {
             Attendance first = new Attendance();
-            first.setDate(cal.getTime());
+            first.setDate(date);
             first.setUser(user);
             first.setTime(time);
-            return first;
+            return attendanceRepository.save(first);
         }
         return null;
     }
