@@ -1,9 +1,11 @@
 package com.feloro.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.feloro.controller.wrapper.ScheduleWrapper;
 import com.feloro.database.domain.Schedule;
 import com.feloro.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -23,7 +25,7 @@ public class ScheduleController {
     }
 
     @GetMapping("/holiday")
-    public String isPublicHoliday(@RequestParam String date){
+    public String isPublicHoliday(@RequestParam @DateTimeFormat(pattern="dd-MM-yyyy") Date date){
         return scheduleService.isPublicHoliday(date);
     }
 

@@ -8,14 +8,12 @@ import com.feloro.database.repository.ScheduleRepository;
 import com.feloro.database.repository.ScheduleWorkShiftRepository;
 import com.feloro.settings.AppProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ScheduleService {
@@ -36,14 +34,23 @@ public class ScheduleService {
         return scheduleRepository.findAllByUser_Id(userId);
     }
 
-    public String isPublicHoliday(String date) {
+    public String isPublicHoliday(Date date) {
         RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        ResponseEntity<HashMap> responseEntity = restTemplate.getForEntity(AppProperties.getCalendarLink(), HashMap.class);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        String url = AppProperties.getCalendarLink()
+                +"&year="+calendar.get(Calendar.YEAR)
+                +"&month="+(calendar.get(Calendar.MONTH)+1)
+                +"&day="+calendar.get(Calendar.DAY_OF_MONTH);
+        ResponseEntity<HashMap> responseEntity = restTemplate.getForEntity(url, HashMap.class);
+
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
-            System.out.println("yep");
-            return null;
+            ArrayList<Map<String, String>> holidays = (ArrayList<Map<String, String>>) responseEntity.getBody().get("holidays");
+            if (holidays.isEmpty()) {
+                return null;
+            } else {
+                return holidays.get(0).get("name");
+            }
         } else {
             return null;
         }
