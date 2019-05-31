@@ -4,9 +4,18 @@ import java.util.List;
 import java.util.UUID;
 
 public class ScheduleWrapper {
+    private UUID scheduleID;
     private List<Day> days;
     private UUID userId;
     private Long state;
+
+    public UUID getScheduleID() {
+        return scheduleID;
+    }
+
+    public void setScheduleID(UUID scheduleID) {
+        this.scheduleID = scheduleID;
+    }
 
     public List<Day> getDays() {
         return days;

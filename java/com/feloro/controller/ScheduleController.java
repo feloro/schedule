@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 public class ScheduleController {
@@ -20,8 +21,15 @@ public class ScheduleController {
     ScheduleService scheduleService;
 
     @GetMapping("/schedule")
-    public List<Schedule> getSchedulesByUserId(@RequestParam UUID userId) {
-        return scheduleService.findAllByUserId(userId);
+    public List<ScheduleWrapper> getSchedulesByUserId(@RequestParam UUID userId) {
+        return scheduleService.findAllByUserId(userId).stream().map(it->{
+            ScheduleWrapper wrapper = new ScheduleWrapper();
+            wrapper.setState(it.getState());
+            wrapper.setUserId(it.getUser().getId());
+            wrapper.setDays(scheduleService.getDaysByScheduleId(it.getScheduleId()));
+            wrapper.setScheduleID(it.getScheduleId());
+            return wrapper;
+        }).collect(Collectors.toList());
     }
 
     @GetMapping("/holiday")

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ScheduleService {
@@ -54,6 +55,15 @@ public class ScheduleService {
         } else {
             return null;
         }
+    }
+
+    public List<Day> getDaysByScheduleId(UUID id) {
+        return scheduleWorkShiftRepository.findAllBySchedule_ScheduleId(id).stream().map(it -> {
+            Day day = new Day();
+            day.setDate(it.getDate());
+            day.setShift(it.getWorkShift());
+            return day;
+        }).collect(Collectors.toList());
     }
 
     public Schedule setNewState(UUID scheduleId, Long stateId) {
